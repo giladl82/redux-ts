@@ -1,0 +1,66 @@
+.ant-layout.main-layout {
+  background-color: #fff;
+}
+
+.main-header--fixed {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 1;
+}
+
+.main-header__content {
+  display: flex;
+}
+
+.main-header__title {
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mani-header__nav {
+  margin: 0 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.main-header__link {
+  color: #fff;
+  display: block;
+  margin: 0 2rem;
+  font-size: 2rem;
+  font-weight: 200;
+  padding: 0;
+  height: 3rem;
+  line-height: 2.5rem;
+}
+
+.main-header__link:hover {
+  border-bottom: solid 1px currentColor;
+}
+
+.main-header__link.active,
+.main-header__link.active:hover {
+  border-bottom: none;
+  color:#ccc;
+}
+
+
+.main-content {
+  margin: calc(64px + 5%) 5%;
+  width: calc(100vw - 10%);
+}
+
+.main-footer--fixed {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  z-index: 1;
+}
+
+.main-footer__my-contacts {
+  color: #ccc;
+  font-size: 1.2rem;
+}

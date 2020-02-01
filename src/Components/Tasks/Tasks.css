@@ -1,0 +1,63 @@
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.list-header__title {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.ant-select.list-header__filters {
+  width: 10rem;
+  margin: auto 1rem;
+}
+
+
+.task-item {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 10%);
+  margin: auto;
+}
+
+.task-item--done {
+  text-decoration: line-through;
+}
+
+.task-item__data {
+  flex-grow: 1;
+}
+
+.task-item__title {
+  font-weight: bold;
+  font-size: 1.6rem;
+}
+
+.task-item__description {
+  font-size: 1.4rem;
+  color: #666;
+}
+
+.ant-btn-link.task-item__delete {
+  color: #ff4d4f;
+  margin-right: 1rem;
+}
+
+.ant-btn-link.task-item__delete:hover {
+  color: #ff4d4f;
+  opacity: 0.7;
+}
+
+.ant-btn-link.task-item__delete svg {
+  stroke-width: 2rem;
+  width: 2.1rem;
+  height: 2.1rem;
+
+}
+
+.task-item__switch {
+  align-self: center;
+}
