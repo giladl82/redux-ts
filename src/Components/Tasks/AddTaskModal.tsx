@@ -33,11 +33,6 @@ const AddModalTask = (props: AddTaskProps) => {
             rules: [{ required: true, message: 'Please enter task title!' }]
           })(<Input placeholder="Task title" id="title" name="title" />)}
         </Form.Item>
-        <Form.Item label="Description">
-          {getFieldDecorator('description', {
-            rules: [{ required: true, message: 'Please enter task description!' }]
-          })(<Input placeholder="Task description" id="description" name="description" />)}
-        </Form.Item>
         <Form.Item>
           <Button htmlType="submit">Submit</Button>
         </Form.Item>

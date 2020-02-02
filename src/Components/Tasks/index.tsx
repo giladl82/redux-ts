@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { List } from 'antd';
-
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../../Store';
@@ -10,30 +9,36 @@ import ListItem from './ListItem';
 import AddTaskModal from './AddTaskModal';
 
 import './Tasks.css';
+import { getAllTasks, addTask, removeTask } from '../../Store/Tasks/actions';
+import { Task } from '../../Store/Tasks/types';
 
 const Tasks = () => {
   const dispatch = useDispatch();
-  const tasks = useSelector((state: RootState) => state.tasks);
-
-  const [tasksList, setTasksList] = useState(tasks.list);
+  const tasks = useSelector((state: RootState) => state.tasks.list);
+  const [tasksList, setTasksList] = useState(tasks);
   const [isNewTaskModalVisible, setIsNewTaskModalVisible] = useState(false);
   const [filter, setFilter] = useState('all');
+  const completedCount = useMemo(() => tasks.filter(task => task.completed).length, [tasks]);
 
-  const { count, countUnDone, countDone, list, done, unDone } = tasks;
+  // const { count, countUnDone, countDone, list, done, unDone } = tasks;
+
+  useEffect(() => {
+    dispatch(getAllTasks());
+  }, []);
 
   useEffect(() => {
     switch (filter) {
       case 'all':
-        setTasksList(list);
+        setTasksList(tasks);
         break;
       case 'done':
-        setTasksList(done);
+        setTasksList(tasks.filter(task => task.completed));
         break;
       case 'todo':
-        setTasksList(unDone);
+        setTasksList(tasks.filter(task => !task.completed));
         break;
     }
-  }, [count, countUnDone, countDone, list, done, unDone, filter]);
+  }, [filter, tasks]);
 
   const handleAddNewTaskClick = () => {
     setIsNewTaskModalVisible(true);
@@ -44,7 +49,7 @@ const Tasks = () => {
   };
 
   const handleDeleteTask = (task: Task) => {
-    tasks.remove(task);
+    dispatch(removeTask(task));
   };
 
   return (
@@ -55,14 +60,19 @@ const Tasks = () => {
           setIsNewTaskModalVisible(false);
         }}
         onSubmit={values => {
-          const task = new Task(values.title, values.description);
-          tasks.add(task);
+          const task: Task = {
+            id: Date.now().toString(),
+            title: values.title,
+            completed: false
+          };
+
+          dispatch(addTask(task));
           setIsNewTaskModalVisible(false);
         }}
       />
       <List
         header={<ListHeader onAddNewTask={handleAddNewTaskClick} onFilterTasks={handleFilterTasks} />}
-        footer={<div>{`${tasks.countDone} / ${tasks.count}`}</div>}
+        footer={<div>{`${completedCount} / ${tasks.length}`}</div>}
         bordered
         dataSource={tasksList}
         renderItem={item => (
@@ -75,4 +85,4 @@ const Tasks = () => {
   );
 };
 
-export default observer(Tasks);
+export default Tasks;

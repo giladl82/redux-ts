@@ -1,7 +1,9 @@
 import React from 'react';
-import Task from '../../Models/Task';
-import { observer } from 'mobx-react-lite';
+import { useDispatch } from 'react-redux';
 import { Switch, Icon, Button } from 'antd';
+
+import { Task } from '../../Store/Tasks/types';
+import { toggleTaskCompleted } from '../../Store/Tasks/actions';
 
 interface Props {
   task: Task;
@@ -9,30 +11,31 @@ interface Props {
 }
 
 const TaskListItem = ({ task, onDeleteTask }: Props) => {
-  const itemCss = ['task-item', task.isDone && 'task-item--done'].join(' ');
+  const itemCss = ['task-item', task.completed && 'task-item--done'].join(' ');
 
   const handleDeleteTask = () => {
     onDeleteTask(task);
   };
 
+  const dispatch = useDispatch();
+
   return (
     <div className={itemCss}>
       <div className="task-item__data">
         <div className="task-item__title">{task.title}</div>
-        <div className="task-item__description">
-          <i>{task.description}</i>
-        </div>
       </div>
       <Button className="task-item__delete" icon="delete" type="link" onClick={handleDeleteTask}></Button>
       <Switch
         className="task-item__switch"
-        onChange={task.toggleStatus}
+        onChange={() => {
+          dispatch(toggleTaskCompleted(task));
+        }}
         checkedChildren={<Icon type="check" />}
         unCheckedChildren={<Icon type="close" />}
-        defaultChecked={task.isDone}
+        defaultChecked={task.completed}
       />
     </div>
   );
 };
 
-export default observer(TaskListItem);
+export default TaskListItem;

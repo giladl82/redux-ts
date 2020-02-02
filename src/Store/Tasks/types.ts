@@ -6,27 +6,32 @@ export interface Task {
 
 export const GET_ALL_TASKS = 'GET_ALL_TASKS';
 export const ADD_TASK = 'ADD_TASK';
-export const TOGGLE_IS_DONE = 'TOGGLE_IS_DONE';
+export const TOGGLE_IS_COMPETED = 'TOGGLE_IS_COMPETED';
 export const DELETE_TASK = 'DELETE_DONE';
 
 export interface TasksState {
   list: Task[];
 }
 
-interface getAllTasksAction {
+export interface AddTaskAction {
+  type: typeof ADD_TASK;
+  task: Task;
+}
+
+export interface GetAllTasksAction {
   type: typeof GET_ALL_TASKS;
   tasks: Task[];
 }
 
-interface toggleCompletedAction {
-  type: typeof TOGGLE_IS_DONE;
+export interface ToggleCompletedAction {
+  type: typeof TOGGLE_IS_COMPETED;
   taskId: string;
   completed: boolean;
 }
 
-interface deleteTaskAction {
+export interface DeleteTaskAction {
   type: typeof DELETE_TASK;
   task: Task;
 }
 
-export type TaskActionTypes = getAllTasksAction | toggleCompletedAction | deleteTaskAction;
+export type TaskActionTypes = GetAllTasksAction | AddTaskAction | ToggleCompletedAction | DeleteTaskAction;
